@@ -1,13 +1,13 @@
 [
   /// Micro Python
   {
-    "label": "MicroPython REPL",
+    "label": "Serial Connection (REPL)",
     // "command": "picocom $PORT -b$BAUD",
-    "command": "mpremote connect $PORT",
-    "env": {
-      "PORT": "/dev/cu.usbmodem21201",
-      "BAUD": "115200"
-    },
+    "command": "mpremote connect auto",
+    // "env": {
+    //   "PORT": "/dev/cu.usbmodem21201",
+    //   "BAUD": "115200"
+    // },
     "shell": "system"
   },
   {
@@ -34,6 +34,12 @@
     "env": {
       "PORT": "/dev/cu.usbmodem21201"
     },
+    "shell": "system",
+    "tags": ["python-main"]
+  },
+  {
+    "label": "CircuitPython Upload code.py",
+    "command": "cp $ZED_FILE /Volumes/CIRCUITPY/code.py",
     "shell": "system",
     "tags": ["python-main"]
   }
