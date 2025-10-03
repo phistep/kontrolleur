@@ -3,11 +3,12 @@
 ## ESP32-S3-Pico
 
 - https://de.aliexpress.com/item/1005006444134211.html
-- https://www.waveshare.com/wiki/ESP32-S3-Pico#Flash_Firmware
-- https://docs.micropython.org/en/latest/esp32/tutorial/intro.html
+- https://www.waveshare.com/wiki/ESP32-S3-Pico
 
 
 ### MicroPython
+
+- https://docs.micropython.org/en/latest/esp32/tutorial/intro.html
 
 #### Flashing
 
