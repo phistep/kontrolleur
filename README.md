@@ -114,3 +114,31 @@ mpremote connect auto
 
 will give you a REPL, after pressing Ctlr-D, the program is run and the output
 is shown. After every file save, the program is automatically rerun.
+
+#### MIDI
+
+- https://docs.circuitpython.org/en/latest/shared-bindings/usb_midi/
+- https://docs.circuitpython.org/projects/midi/en/latest/index.html
+
+Download the library bundle
+
+```sh
+wget https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases/download/20251003/adafruit-circuitpython-bundle-10.x-mpy-20251003.zip
+unzip adafruit-circuitpython-bundle-10.x-mpy-20251003.zip
+```
+
+then install the `adafruit_midi` library
+
+```sh
+cp -r ESP32-S3-Pico/circuitpython/adafruit-circuitpython-bundle-10.x-mpy-20251003/lib/adafruit_midi /Volumes/CIRCUITPY/lib/
+```
+
+Also [enable `usb_midi` in `boot.py`](https://learn.adafruit.com/customizing-usb-devices-in-circuitpython/circuitpy-midi-serial#midi-3096586):
+
+```python
+import usb_hid, usb_midi
+
+# On some boards, we need to give up HID to accomodate MIDI.
+usb_hid.disable()
+usb_midi.enable()
+```
