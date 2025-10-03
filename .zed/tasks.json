@@ -1,0 +1,40 @@
+[
+  /// Micro Python
+  {
+    "label": "MicroPython REPL",
+    // "command": "picocom $PORT -b$BAUD",
+    "command": "mpremote connect $PORT",
+    "env": {
+      "PORT": "/dev/cu.usbmodem21201",
+      "BAUD": "115200"
+    },
+    "shell": "system"
+  },
+  {
+    "label": "MicroPython Run",
+    "command": "mpremote run $ZED_FILE",
+    "env": {
+      "PORT": "/dev/cu.usbmodem21201"
+    },
+    "shell": "system",
+    "tags": ["python-main"]
+  },
+  {
+    "label": "MicroPython Upload",
+    "command": "mpremote cp $ZED_FILE :$ZED_FILENAME",
+    "env": {
+      "PORT": "/dev/cu.usbmodem21201"
+    },
+    "shell": "system",
+    "tags": ["python-main"]
+  },
+  {
+    "label": "MicroPython Upload main.py",
+    "command": "mpremote cp $ZED_FILE :main.py",
+    "env": {
+      "PORT": "/dev/cu.usbmodem21201"
+    },
+    "shell": "system",
+    "tags": ["python-main"]
+  }
+]
