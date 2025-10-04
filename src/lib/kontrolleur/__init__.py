@@ -20,11 +20,23 @@ class Kontrolleur:
 
     def run(self):
         while True:
-            for cc, control in self.controls.items():
-                if control.poll():
-                    value = int(control.value * MIDI_MAX)
-                    msg = ControlChange(cc, value)
-                    print(cc, control, value, msg)
-                    self.midi.send(msg)
+            for ccs, control in self.controls.items():
+                if not isinstance(ccs, tuple):
+                    ccs = (ccs,)
+
+                changed = control.poll()
+                if not isinstance(changed, tuple):
+                    changed = (changed,)
+
+                values = control.value
+                if not isinstance(values, tuple):
+                    values = (values,)
+
+                for cc, change, value in zip(ccs, changed, values):
+                    if change:
+                        value = int(value * MIDI_MAX)
+                        msg = ControlChange(cc, value)
+                        print(cc, control, value, msg)
+                        self.midi.send(msg)
 
                 time.sleep(self._interval)

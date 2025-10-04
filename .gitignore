@@ -7,3 +7,4 @@ __pycache__
 *.bin
 *.uf2
 adafruit-circuitpython-bundle*
+*.jpg
