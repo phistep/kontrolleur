@@ -2,6 +2,10 @@ from analogio import AnalogIn
 from digitalio import DigitalInOut, Direction
 from microcontroller import Pin
 
+# http://adam-meyer.com/arduino/CD74HC4067
+# https://38-3d.co.uk/blogs/blog/using-the-cd74hc4067-multiplexer-with-the-raspberry-pi
+# https://github.com/gsampallo/micropython_examples/blob/master/74HC4067/multiplexor.py
+
 # TODO reference count in parent mutliplexer object, cleanup once all children
 #      are cleaned up
 # TODO address as `bytes`
