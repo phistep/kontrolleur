@@ -11,15 +11,20 @@ def main():
     io41.pull = Pull.UP
 
     io1_multi = CD74HC4067(
-        s0=board.IO38, s1=board.IO37, s2=board.IO36, s3=board.IO35, sig=board.IO1
+        s0=board.IO16, s1=board.IO15, s2=board.IO14, s3=board.IO13, sig=board.IO1
     )
+
+    # TODO 74HC595 is SIPO, we want 74HC165 PISO woolseyworkshop_circuitpython_74hc165
+    # from adafruit_74hc595 import ShiftRegister74HC595
+    # spi = board.SPI()  # SCK=IO36, MOSI=IO35
+    # io42_multi = ShiftRegister74HC595(spi, DigitalInOut(board.IO42))
+    # io42_multi.get_pin(7)),
 
     kontrolleur = Kontrolleur(
         {
-            0: Potentiometer(io1_multi[15]),
-            1: Potentiometer(io1_multi[8]),
-            (2, 3, 4): Joystick(io1_multi[7], io1_multi[6], io41),
-            5: Distance(trig=board.IO17, echo=board.IO16),
+            1: Potentiometer(io1_multi[9]),
+            (2, 3, 4): Joystick(io1_multi[7], io1_multi[8], None),
+            5: Distance(trig=board.IO18, echo=board.IO17),
         }
     )
 
