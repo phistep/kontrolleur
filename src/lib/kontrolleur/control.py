@@ -3,6 +3,7 @@
 from analogio import AnalogIn
 from digitalio import DigitalInOut
 from microcontroller import Pin
+from rotaryio import IncrementalEncoder
 
 ANALOG_MAX = 65535
 
@@ -122,3 +123,33 @@ class Distance(Control):
         # TODO keep value when goes to zero
         value = 1 - (min(self._value, self._max) / self._max)
         return value
+
+
+class Encoder(Control):
+    """EC12
+
+    https://botland.de/encoder/6909-encoder-mit-taster-24-impulse-12mm-ec12-vertikal-5-stk-5903351245432.html
+    https://learn.adafruit.com/bluetooth-le-hid-volume-knob-with-circuitpython/build-the-ble-volume-knob
+    """
+
+    def __init__(self, a: Pin, b: Pin, btn: Pin):
+        self._value = 0
+        self._prev_value = 0
+        self._encoder = IncrementalEncoder(a, b)
+        # TODO button
+
+    def poll(self) -> tuple[bool, bool, bool]:
+        value = self._encoder.position
+        # check prev state to emit _off_ signal of pulse
+        decrement = value < self._value or self._value < self._prev_value
+        increment = value > self._value or self._value > self._prev_value
+        self._prev_value = self._value
+        self._value = value
+        return decrement, increment, False
+
+    @property
+    def value(self) -> tuple[bool, bool, bool]:
+        decrement = self._value < self._prev_value
+        increment = self._value > self._prev_value
+        button = None
+        return decrement, increment, button
