@@ -4,6 +4,7 @@ from microcontroller import Pin
 
 # TODO reference count in parent mutliplexer object, cleanup once all children
 #      are cleaned up
+# TODO address as `bytes`
 
 CHANNELS = {
     0: [0, 0, 0, 0],

@@ -42,5 +42,10 @@
     "command": "cp $ZED_FILE /Volumes/CIRCUITPY/code.py",
     "shell": "system",
     "tags": ["python-main"]
+  },
+  {
+    "label": "install.sh",
+    "command": "$ZED_WORKTREE_ROOT/install.sh",
+    "shell": "system"
   }
 ]
