@@ -18,12 +18,12 @@ multiplexer = CD74HC4067(
     s0=board.IO38, s1=board.IO37, s2=board.IO36, s3=board.IO35, sig=board.IO1
 )
 
-pots = [15, 8]
+pots = [multiplexer[15], multiplexer[8]]
 _values = [None, None]
 
 while True:
     for n, pot in enumerate(pots):
-        pot_value = multiplexer.read(pot)
+        pot_value = pot.value
         value = int(pot_value / ANALOG_MAX * MIDI_MAX)
         if value != _values[n]:
             _values[n] = value
