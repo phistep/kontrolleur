@@ -2,7 +2,7 @@ import board
 from cd74hc4067 import CD74HC4067
 from digitalio import DigitalInOut, Direction, Pull
 from kontrolleur import Kontrolleur
-from kontrolleur.control import Distance, Encoder, Joystick, Potentiometer
+from kontrolleur.control import Button, Distance, Encoder, Joystick, Potentiometer
 
 
 def main():
@@ -22,10 +22,11 @@ def main():
 
     kontrolleur = Kontrolleur(
         {
-            1: Potentiometer(io1_multi[9]),
-            (2, 3, 4): Joystick(io1_multi[7], io1_multi[8], None),
-            5: Distance(trig=board.IO18, echo=board.IO17),
-            (6, 7, 8): Encoder(a=board.IO39, b=board.IO40, btn=board.IO38),
+            0: Button(board.IO33),
+            # 1: Potentiometer(io1_multi[9]),
+            # (2, 3, 4): Joystick(io1_multi[7], io1_multi[8], None),
+            # 5: Distance(trig=board.IO18, echo=board.IO17),
+            # (6, 7, 8): Encoder(a=board.IO39, b=board.IO40, btn=board.IO38),
         }
     )
 

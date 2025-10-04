@@ -1,7 +1,7 @@
 # from abc import ABC, abstractmethod
 
 from analogio import AnalogIn
-from digitalio import DigitalInOut
+from digitalio import DigitalInOut, Pull
 from microcontroller import Pin
 from rotaryio import IncrementalEncoder
 
@@ -17,6 +17,56 @@ class Control:  # (ABC):
     def value(self) -> (float | int | bool | None) | tuple[
         float | int | bool | None, ...
     ]: ...
+
+
+class Button(Control):
+    # TODO `keypad.ShiftRegisterKeys` for more efficiency
+    # TODO toggle
+
+    def __init__(self, pin: Pin):
+        from adafruit_debouncer import Debouncer
+
+        _pin = DigitalInOut(pin)
+        _pin.pull = Pull.UP
+        self._button = Debouncer(_pin)
+        self._value = False
+
+    def poll(self) -> bool:
+        self._button.update()
+        if self._button.fell:
+            self._value = True
+            changed = True
+        elif self._button.rose:
+            self._value = False
+            changed = True
+        else:
+            changed = False
+        return changed
+
+    @property
+    def value(self) -> bool:
+        return self._value
+
+
+class Toggle(Control):
+    def __init__(self, pin: Pin):
+        from adafruit_debouncer import Debouncer
+
+        _pin = DigitalInOut(pin)
+        _pin.pull = Pull.UP
+        self._button = Debouncer(_pin)
+        self._value = False
+
+    def poll(self) -> bool:
+        self._button.update()
+        if self._button.fell:
+            self._value = not self._value
+            return True
+        return False
+
+    @property
+    def value(self) -> bool:
+        return self._value
 
 
 class Potentiometer(Control):
