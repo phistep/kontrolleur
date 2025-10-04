@@ -21,7 +21,6 @@ class Control:  # (ABC):
 
 class Button(Control):
     # TODO `keypad.ShiftRegisterKeys` for more efficiency
-    # TODO toggle
 
     def __init__(self, pin: Pin):
         from adafruit_debouncer import Debouncer
@@ -48,25 +47,13 @@ class Button(Control):
         return self._value
 
 
-class Toggle(Control):
-    def __init__(self, pin: Pin):
-        from adafruit_debouncer import Debouncer
-
-        _pin = DigitalInOut(pin)
-        _pin.pull = Pull.UP
-        self._button = Debouncer(_pin)
-        self._value = False
-
+class Toggle(Button):
     def poll(self) -> bool:
         self._button.update()
         if self._button.fell:
             self._value = not self._value
             return True
         return False
-
-    @property
-    def value(self) -> bool:
-        return self._value
 
 
 class Potentiometer(Control):
@@ -94,38 +81,30 @@ class Joystick(Control):
     https://botland.de/joystick-arduino-joystick/4093-daumen-joystick-mit-taste-v2-modul-mit-platine-iduino-st1079-5903351241441.html
     """
 
-    # TODO use as delta
+    # TODO use as delta, hold position
 
     def __init__(
         self,
         x: AnalogIn,
         y: AnalogIn,
-        sw: DigitalInOut | None = None,
+        sw: Pin | None = None,
+        toggle: bool = False,
         tolerance: int = 200,
     ):
         # TODO auto-calib, calib params
         self._x = Potentiometer(x, tolerance=tolerance)
         self._y = Potentiometer(y, tolerance=tolerance)
-        self.pin_sw = sw
-
-        self._value_sw = None if sw is None else False
+        self._button = Toggle(sw) if toggle else Button(sw)
 
     def poll(self):
         changed_x = self._x.poll()
         changed_y = self._y.poll()
-
-        if self.pin_sw is not None:
-            value_sw = not self.pin_sw.value
-            changed_sw = value_sw != self._value_sw
-            self._value_sw = value_sw
-        else:
-            changed_sw = False
-
+        changed_sw = self._button.poll()
         return changed_x, changed_y, changed_sw
 
     @property
     def value(self) -> tuple[float, float, bool | None]:
-        return self._x.value, self._y.value, self._value_sw
+        return self._x.value, self._y.value, self._button.value
 
 
 class Distance(Control):
@@ -182,11 +161,11 @@ class Encoder(Control):
     https://learn.adafruit.com/bluetooth-le-hid-volume-knob-with-circuitpython/build-the-ble-volume-knob
     """
 
-    def __init__(self, a: Pin, b: Pin, btn: Pin):
+    def __init__(self, a: Pin, b: Pin, btn: Pin, toggle: bool = False):
         self._value = 0
         self._prev_value = 0
         self._encoder = IncrementalEncoder(a, b)
-        # TODO button
+        self._button = Toggle(btn) if toggle else Button(btn)
 
     def poll(self) -> tuple[bool, bool, bool]:
         value = self._encoder.position
@@ -195,11 +174,10 @@ class Encoder(Control):
         increment = value > self._value or self._value > self._prev_value
         self._prev_value = self._value
         self._value = value
-        return decrement, increment, False
+        return decrement, increment, self._button.poll()
 
     @property
     def value(self) -> tuple[bool, bool, bool]:
         decrement = self._value < self._prev_value
         increment = self._value > self._prev_value
-        button = None
-        return decrement, increment, button
+        return decrement, increment, self._button.value

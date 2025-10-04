@@ -7,18 +7,16 @@ next = 7
 # next = 62
 # save = 60
 
-[system.ui]
-toggle = 8
+[uniform]
+toggle_ui = 8
 
-# [system.time]
-# toggle = 41
-# decrease_speed = 43
-# increase_speed = 44
+[uniform.time]
+toggle = 0
 
 [parameters]
+# button = [0]
 knob = [1]
 x = [2]
 y = [3]
 z = [4]
 distance = [5]
-button = []
