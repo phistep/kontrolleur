@@ -2,6 +2,7 @@
 
 from analogio import AnalogIn
 from digitalio import DigitalInOut
+from microcontroller import Pin
 
 ANALOG_MAX = 65535
 
@@ -12,18 +13,20 @@ class Control:  # (ABC):
 
     @property
     # @abstractmethod
-    def value(self) -> (float | int | bool) | tuple[float | int | bool, ...]: ...
+    def value(self) -> (float | int | bool | None) | tuple[
+        float | int | bool | None, ...
+    ]: ...
 
 
 class Potentiometer(Control):
-    def __init__(self, pin: AnalogIn, threshold: int = 200):
-        self._threshold = threshold
+    def __init__(self, pin: AnalogIn, tolerance: int = 200):
+        self._tolerance = tolerance
         self._value = 0
         self.pin = pin
 
     def poll(self):
         value = self.pin.value
-        changed = abs(self._value - value) > self._threshold
+        changed = abs(self._value - value) > self._tolerance
         self._value = value
         return changed
 
@@ -40,16 +43,18 @@ class Joystick(Control):
     https://botland.de/joystick-arduino-joystick/4093-daumen-joystick-mit-taste-v2-modul-mit-platine-iduino-st1079-5903351241441.html
     """
 
+    # TODO use as delta
+
     def __init__(
         self,
         x: AnalogIn,
         y: AnalogIn,
         sw: DigitalInOut | None = None,
-        threshold: int = 200,
+        tolerance: int = 200,
     ):
         # TODO auto-calib, calib params
-        self._x = Potentiometer(x, threshold=threshold)
-        self._y = Potentiometer(y, threshold=threshold)
+        self._x = Potentiometer(x, tolerance=tolerance)
+        self._y = Potentiometer(y, tolerance=tolerance)
         self.pin_sw = sw
 
         self._value_sw = None if sw is None else False
@@ -70,3 +75,50 @@ class Joystick(Control):
     @property
     def value(self) -> tuple[float, float, bool | None]:
         return self._x.value, self._y.value, self._value_sw
+
+
+class Distance(Control):
+    """HCSR04
+
+    https://learn.adafruit.com/ultrasonic-sonar-distance-sensors/overview
+    """
+
+    def __init__(
+        self,
+        trig: Pin,
+        echo: Pin,
+        max_: float = 30.0,
+        tolerance: float = 0.5,
+        average: int = 3,
+    ):
+        from adafruit_hcsr04 import HCSR04
+
+        self._value = 0
+        self._max = max_
+        self._tolerance = tolerance
+        self._average = average
+        self._sensor = HCSR04(trigger_pin=trig, echo_pin=echo)
+
+    def poll(self):
+        try:
+            value = (
+                sum(self._sensor.distance for _ in range(self._average)) / self._average
+            )
+            if value > self._max:
+                # changed = self._value != self._max
+                # self._value = self._max
+                changed = False
+            else:
+                changed = abs(self._value - value) > self._tolerance
+                self._value = value
+        except RuntimeError as e:
+            print(self, e)
+            changed = False
+        return changed
+
+    @property
+    def value(self) -> float:
+        # TODO return max on idle
+        # TODO keep value when goes to zero
+        value = 1 - (min(self._value, self._max) / self._max)
+        return value

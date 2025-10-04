@@ -1,1 +1,2 @@
 adafruit_midi
+adafruit_circuitpython_hcsr04

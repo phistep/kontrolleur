@@ -39,4 +39,4 @@ class Kontrolleur:
                         print(cc, control, value, msg)
                         self.midi.send(msg)
 
-                time.sleep(self._interval)
+            time.sleep(self._interval)
