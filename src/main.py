@@ -13,6 +13,24 @@ from kontrolleur.control import (
 
 
 def main():
+    # TODO move into CD74GC4067 driver
+    mp1_core = CD74HC4067(
+        s0=board.IO16, s1=board.IO15, s2=board.IO14, s3=board.IO12, sig=board.IO1
+    )
+    mp1_core_enable = DigitalInOut(board.IO11)
+    mp1_core_enable.direction = Direction.OUTPUT
+    mp1_core_enable.value = False
+
+    kontrolleur = Kontrolleur(
+        {
+            1: Potentiometer(mp1_core[15]),
+        }
+    )
+
+    kontrolleur.run()
+
+
+def main_dev():
     io41 = DigitalInOut(board.IO41)
     io41.direction = Direction.INPUT
     io41.pull = Pull.UP
@@ -29,11 +47,11 @@ def main():
 
     kontrolleur = Kontrolleur(
         {
-            0: Toggle(board.IO33),
-            1: Potentiometer(io1_multi[9]),
-            (2, 3, 4): Joystick(io1_multi[7], io1_multi[8], board.IO8),
-            # 5: Distance(trig=board.IO18, echo=board.IO17),
-            (6, 7, 8): Encoder(a=board.IO39, b=board.IO40, btn=board.IO38, toggle=True),
+            # 0: Toggle(board.IO33),
+            # 1: Potentiometer(io1_multi[9]),
+            # (2, 3, 4): Joystick(io1_multi[7], io1_multi[8], board.IO8),
+            5: Distance(trig=board.IO18, echo=board.IO17, max_=50),
+            # (6, 7, 8): Encoder(a=board.IO39, b=board.IO40, btn=board.IO38, toggle=True),
         }
     )
 

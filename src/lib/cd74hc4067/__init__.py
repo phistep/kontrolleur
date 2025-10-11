@@ -8,6 +8,7 @@ from microcontroller import Pin
 
 # TODO reference count in parent mutliplexer object, cleanup once all children
 #      are cleaned up
+# TODO enable pin support
 # TODO address as `bytes`
 
 CHANNELS = {
