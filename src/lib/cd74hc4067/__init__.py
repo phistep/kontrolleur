@@ -31,7 +31,14 @@ CHANNELS = {
 }
 
 
-def CD74HC4067(s0: Pin, s1: Pin, s2: Pin, s3: Pin, sig: Pin):
+def AnalogMultiplexer(
+    s0: Pin,
+    s1: Pin,
+    s2: Pin,
+    s3: Pin,
+    sig: Pin,
+    enable: Pin | None = None,
+):
     pin_s0 = DigitalInOut(s0)
     pin_s1 = DigitalInOut(s1)
     pin_s2 = DigitalInOut(s2)
@@ -41,8 +48,22 @@ def CD74HC4067(s0: Pin, s1: Pin, s2: Pin, s3: Pin, sig: Pin):
 
     pin_sig = AnalogIn(sig)
 
+    if enable is not None:
+        pin_enable = DigitalInOut(enable)
+        pin_enable.direction = Direction.OUTPUT
+    else:
+        pin_enable = None
+
     return [
-        AnalogInMultiplexed(pin_s0, pin_s1, pin_s2, pin_s3, pin_sig, channel)
+        AnalogInMultiplexed(
+            pin_s0,
+            pin_s1,
+            pin_s2,
+            pin_s3,
+            sig=pin_sig,
+            channel=channel,
+            enable=pin_enable,
+        )
         for channel in CHANNELS
     ]
 
@@ -56,6 +77,7 @@ class AnalogInMultiplexed:
         s3: DigitalInOut,
         sig: AnalogIn,
         channel: int,
+        enable: DigitalInOut | None = None,
     ):
         if not 0 <= channel <= 15:
             raise ValueError("'channel' must be betweeen 0 and 15")
@@ -67,6 +89,8 @@ class AnalogInMultiplexed:
         self.s3 = s3
         self.sig = sig
         self.b0, self.b1, self.b2, self.b3 = CHANNELS[channel]
+
+        self._enable = enable
 
     def __str__(self):
         return f"C{self.channel}"
@@ -81,8 +105,17 @@ class AnalogInMultiplexed:
 
     @property
     def value(self):
-        self.s0.value = self.b0
-        self.s1.value = self.b1
-        self.s2.value = self.b2
-        self.s3.value = self.b3
-        return self.sig.value
+        try:
+            if self._enable is not None:
+                # NOTE: `enable` is active-low
+                self._enable.value = False
+
+            self.s0.value = self.b0
+            self.s1.value = self.b1
+            self.s2.value = self.b2
+            self.s3.value = self.b3
+
+            return self.sig.value
+        finally:
+            if self._enable is not None:
+                self._enable.value = True

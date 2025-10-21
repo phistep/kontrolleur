@@ -1,5 +1,5 @@
 import board
-from cd74hc4067 import CD74HC4067
+from cd74hc4067 import AnalogMultiplexer
 from digitalio import DigitalInOut, Direction, Pull
 from kontrolleur import Kontrolleur
 from kontrolleur.control import (
@@ -17,7 +17,7 @@ def main():
     io41.direction = Direction.INPUT
     io41.pull = Pull.UP
 
-    io1_multi = CD74HC4067(
+    io1_multi = AnalogMultiplexer(
         s0=board.IO16, s1=board.IO15, s2=board.IO14, s3=board.IO13, sig=board.IO1
     )
 
