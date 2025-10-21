@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "HCSR04")(type "Legacy")(uri "${KIPRJMOD}/hc_sr04.lib")(options "")(descr ""))
+  (lib (name "kontrolleur")(type "KiCad")(uri "${KIPRJMOD}/kontrolleur.kicad_sym")(options "")(descr ""))
+)

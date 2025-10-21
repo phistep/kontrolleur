@@ -1,0 +1,4 @@
+*.pdf
+*.bak
+*-backups
+~*.kicad_*.lck

@@ -1,5 +1,7 @@
 # Pinout
 
+![schematics](img/schematic.png)
+
 ## Controller
 
 `ESP32-S3-Pico`
