@@ -23,7 +23,10 @@ def main():
 
     kontrolleur = Kontrolleur(
         {
-            1: Potentiometer(mp1_core[15]),
+            1: Potentiometer(mp1_core[12]),
+            2: Potentiometer(mp1_core[13]),
+            3: Potentiometer(mp1_core[14]),
+            4: Potentiometer(mp1_core[15]),
         }
     )
 
