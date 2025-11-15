@@ -1,3 +1,4 @@
 adafruit_midi
 adafruit_circuitpython_hcsr04
 adafruit_debouncer
+# wws_74hc165  # WoolseyWorkshop/woolseyworkshop_circuitpython_74hc165

@@ -10,9 +10,12 @@ from kontrolleur.control import (
     Potentiometer,
     Toggle,
 )
+from wws_74hc165 import ShiftRegister74HC165
 
 
 def main():
+    spi = board.SPI()  # MOSI=IO37 SCK=IO36, MOSI=IO35
+
     io41 = DigitalInOut(board.IO41)
     io41.direction = Direction.INPUT
     io41.pull = Pull.UP
@@ -21,19 +24,34 @@ def main():
         s0=board.IO16, s1=board.IO15, s2=board.IO14, s3=board.IO13, sig=board.IO1
     )
 
-    # TODO 74HC595 is SIPO, we want 74HC165 PISO woolseyworkshop_circuitpython_74hc165
+    io34_multi = ShiftRegister74HC165(spi, DigitalInOut(board.IO40))
+
+    # -- 8< --
+
+    from time import sleep
+
+    while True:
+        print([int(io34_multi.get_pin(pin).value) for pin in range(8)])
+        sleep(0.01)
+
+    # -- >8 --
+
     # from adafruit_74hc595 import ShiftRegister74HC595
-    # spi = board.SPI()  # SCK=IO36, MOSI=IO35
     # io42_multi = ShiftRegister74HC595(spi, DigitalInOut(board.IO42))
-    # io42_multi.get_pin(7)),
+    # io42_multi.get_pin(7)
 
     kontrolleur = Kontrolleur(
         {
             # 0: Toggle(board.IO33),
             # 1: Potentiometer(io1_multi[9]),
             # (2, 3, 4): Joystick(io1_multi[7], io1_multi[8], board.IO8),
-            5: Distance(trig=board.IO18, echo=board.IO17, max_=50),
-            # (6, 7, 8): Encoder(a=board.IO39, b=board.IO40, btn=board.IO38, toggle=True),
+            # 5: Distance(trig=board.IO18, echo=board.IO17, max_=50),
+            (6, 7, 8): Encoder(
+                a=io34_multi.get_pin(0),
+                b=io34_multi.get_pin(1),
+                btn=io34_multi.get_pin(2),
+                toggle=True,
+            ),
         }
     )
 

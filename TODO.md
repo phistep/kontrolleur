@@ -1,6 +1,13 @@
+- test encoder, ultrasonic, joystick
+- fix off-by-one, fork lib?
+- update schmatics
+- calc number of resistors
+- 
+
+---
+
 - [ ] shift registers   https://docs.circuitpython.org/projects/74hc595/en/latest/
 - [x] analog multiplexers
-  - enable pin!
 - [x] button
 - [x] potentiometer
 - [x] joystick
@@ -9,7 +16,7 @@
 
 - [x] toggle
 - [x] hold distance
-- [ ] hold joystick position
+- [~] hold joystick position -> vhsh (position/orientation)
 - [ ] button mode counter
 
 ## polish
@@ -23,7 +30,12 @@
 ## project
 - mypy cross compile
 - ruff setup
+- ty setup
+- branch + remove circuitpython support
+- remove `ESP32-S3-Pico` folder
 - cleanup
+- cleanup README
+- download script for datasheets
 
 ## programming
 - set ccs
