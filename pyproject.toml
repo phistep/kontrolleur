@@ -1,0 +1,31 @@
+[project]
+name = "kontrolleur"
+description = "MIDI driver for the ESP32-S3-Pico"
+version = "0.0.1a0"
+requires-python = ">=3.10"
+authors = [
+    { name = "Philipp Stephan", email = "mail@philippstephan.de" }
+]
+dependencies = [
+    "adafruit-circuitpython-debouncer>=2.0.13",
+    "adafruit-circuitpython-hcsr04>=0.4.23",
+    "adafruit-circuitpython-midi>=1.5.6",
+]
+
+[dependency-groups]
+dev = [
+    "esptool",
+    "mpremote",
+    "circup",
+    "adafruit-circuitpython-typing>=1.12.3",
+]
+
+[tool.circup]
+circup_dependencies = [
+    "adafruit-circuitpython-debouncer>=2.0.13",
+    "adafruit-circuitpython-hcsr04>=0.4.23",
+    "adafruit-midi>1.5.6",
+]
+
+[tool.uv.sources]
+woolseyworkshop-circuitpython-74hc165 = { git = "https://github.com/WoolseyWorkshop/WoolseyWorkshop_CircuitPython_74HC165.git" }
