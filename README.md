@@ -150,3 +150,11 @@ usb_midi.enable()
 uv tool install circup
 ./install.sh
 ```
+# 74HC165 shift register
+
+[`wws_74hc165`][wws_7hc165]:
+CircuitPython driver for [`74HC165` shift register][74HC165] by John Woolsey licensed under MIT.
+
+
+[wws_74hc165]: https://github.com/WoolseyWorkshop/WoolseyWorkshop_CircuitPython_74HC165
+[74HC165]: https://assets.nexperia.com/documents/data-sheet/74HC_HCT165.pdf
