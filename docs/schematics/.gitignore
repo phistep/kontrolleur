@@ -2,3 +2,4 @@
 *.bak
 *-backups
 ~*.kicad_*.lck
+\#auto_saved_files\#
