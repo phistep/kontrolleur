@@ -28,15 +28,13 @@ Based on Adafruit_CircuitPython_74HC595 driver library.
 * Adafruit's Bus Device library: https://github.com/adafruit/Adafruit_CircuitPython_BusDevice
 """
 
-
 import digitalio
 from adafruit_bus_device import spi_device
 
 try:
-    import typing  # pylint: disable=unused-import
-    from microcontroller import Pin
     import busio
     from circuitpython_typing import ReadableBuffer
+    from microcontroller import Pin
 except ImportError:
     pass
 

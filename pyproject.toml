@@ -19,6 +19,7 @@ dev = [
     "mpremote",
     "circup",
     "adafruit-circuitpython-typing>=1.12.3",
+    "ruff>=0.14.11",
 ]
 
 [tool.circup]
@@ -30,3 +31,12 @@ circup_dependencies = [
 
 [tool.uv.sources]
 woolseyworkshop-circuitpython-74hc165 = { git = "https://github.com/WoolseyWorkshop/WoolseyWorkshop_CircuitPython_74HC165.git" }
+
+[tool.ruff]
+src = ["src/lib"]
+
+[tool.ruff.lint.per-file-ignores]
+"dev.py" = [
+    "F401",  # import not used
+    "F841",  # local variable is assigned to but never used
+]
