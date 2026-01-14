@@ -67,7 +67,7 @@
 | _input_ |           input |  `D5` |   4 |           |  13 | `D2`  | input       | _input_ |
 | _input_ |           input |  `D6` |   5 |           |  12 | `D1`  | input       | _input_ |
 | _input_ |           input |  `D7` |   6 |           |  11 | `D0`  | input       | _input_ |
-|     --- |    output (inv) | `Q7'` |   7 |           |  10 | `DS`  | daisy chain | `GND`   |
+|     --- |    output (inv) | `Q7'` |   7 |           |  10 | `DS`  | daisy chain | `3V3`   |
 |   `GND` |           `GND` | `GND` |   8 |           |   9 | `Q7`  | `SPI MISO`  | `GP37`  |
 
 Inputs cannot be left floating: either tie to LOW/HIGH or use Pull-Up/Down resisotrs (5--10k)
