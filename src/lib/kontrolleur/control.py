@@ -22,12 +22,14 @@ class Control:  # (ABC):
 class Button(Control):
     # TODO `keypad.ShiftRegisterKeys` for more efficiency
 
-    def __init__(self, pin: Pin):
+    def __init__(self, pin: Pin | DigitalInOut):
         from adafruit_debouncer import Debouncer
 
-        _pin = DigitalInOut(pin)
-        _pin.pull = Pull.UP
-        self._button = Debouncer(_pin)
+        if isinstance(pin, Pin):
+            pin = DigitalInOut(pin)
+            pin.pull = Pull.UP
+
+        self._button = Debouncer(pin)
         self._value = False
 
     def poll(self) -> bool:
