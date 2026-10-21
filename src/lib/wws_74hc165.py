@@ -123,7 +123,9 @@ class DigitalInOut:
 
 class ShiftRegister74HC165:
     """Initialize the 74HC165 on the specified SPI bus, indicate the
-    number of shift registers being used, and the optional baudrate.
+    number of shift registers being used, and the optional arguments passed to
+    :class:`adafruit_bus_device.spi_device.SPIDevice`, like `baudrate`, `polarity`
+    and `phase`.
     """
 
     _device: spi_device.SPIDevice
@@ -135,9 +137,9 @@ class ShiftRegister74HC165:
         spi: busio.SPI,
         latch: digitalio.DigitalInOut,
         number_of_shift_registers: int = 1,
-        baudrate: int = 1000000,
+        **kwargs,
     ) -> None:
-        self._device = spi_device.SPIDevice(spi, baudrate=baudrate)
+        self._device = spi_device.SPIDevice(spi, **kwargs)
         self._latch = latch
         self._latch.direction = digitalio.Direction.OUTPUT
         self._number_of_shift_registers = number_of_shift_registers

@@ -1,8 +1,4 @@
 - test encoder, ultrasonic, joystick
-- fix off-by-one, fork lib?
-- update schmatics
-- calc number of resistors
-- 
 
 ---
 

@@ -1,6 +1,7 @@
 import board
-from cd74hc4067 import AnalogMultiplexer
 from digitalio import DigitalInOut, Direction, Pull
+
+from cd74hc4067 import AnalogMultiplexer
 from kontrolleur import Kontrolleur
 from kontrolleur.control import (
     Button,
@@ -14,7 +15,7 @@ from wws_74hc165 import ShiftRegister74HC165
 
 
 def main():
-    spi = board.SPI()  # MOSI=IO37 SCK=IO36, MOSI=IO35
+    spi = board.SPI()  # MISO=IO37 SCK=IO36, MOSI=IO35
 
     io41 = DigitalInOut(board.IO41)
     io41.direction = Direction.INPUT
@@ -24,7 +25,7 @@ def main():
         s0=board.IO16, s1=board.IO15, s2=board.IO14, s3=board.IO13, sig=board.IO1
     )
 
-    io34_multi = ShiftRegister74HC165(spi, DigitalInOut(board.IO40))
+    io34_multi = ShiftRegister74HC165(spi, DigitalInOut(board.IO40), polarity=1)
 
     # -- 8< --
 
