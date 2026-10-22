@@ -22,6 +22,7 @@
   https://learn.adafruit.com/customizing-usb-devices-in-circuitpython/circuitpy-midi-serial#dont-lock-yourself-out-3096636
 - use keypad library
 - performance
+- testing with https://circuitpython-mocks.readthedocs.io/en/latest/index.html
 
 ## project
 - mypy cross compile

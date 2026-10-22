@@ -7,13 +7,13 @@ next = 7
 # next = 62
 # save = 60
 
-[uniform]
-toggle_ui = 8
+[ui]
+toggle = 8
 
-[uniform.time]
+[parameter.time]
 toggle = 0
 
-[parameters]
+[parameter.custom]
 # button = [0]
 knob = [1]
 x = [2]
