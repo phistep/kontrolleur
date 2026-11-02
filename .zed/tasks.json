@@ -47,5 +47,11 @@
     "label": "install.sh",
     "command": "$ZED_WORKTREE_ROOT/install.sh",
     "shell": "system"
-  }
+  },
+{
+  "label": "install.sh --dev",
+  "command": "$ZED_WORKTREE_ROOT/install.sh",
+  "args": ["--dev"],
+  "shell": "system"
+}
 ]
