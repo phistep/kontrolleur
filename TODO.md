@@ -26,8 +26,6 @@
 
 ## project
 - mypy cross compile
-- ruff setup
-- ty setup
 - branch + remove circuitpython support
 - remove `ESP32-S3-Pico` folder
 - cleanup
