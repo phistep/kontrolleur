@@ -3,7 +3,7 @@ from digitalio import DigitalInOut
 
 from cd74hc4067 import AnalogMultiplexer
 from kontrolleur import Kontrolleur
-from kontrolleur.control import Button, Potentiometer
+from kontrolleur.control import Button, Joystick, Potentiometer
 from wws_74hc165 import ShiftRegister74HC165
 
 
@@ -29,7 +29,7 @@ def main():
     #  | [btn3]  [btn4]   (pot3)  (pot4) |
     #  +---------------------------------+
     #          +-| JOY |---------+
-    #          | (joy1)   (joy2) |
+    #          | (joyL)   (joyR) |
     #          +-----------------+
 
     kontrolleur = Kontrolleur(
@@ -56,6 +56,19 @@ def main():
             10: Button(srin1_core.get_pin(5)),  # button3
             11: Button(srin1_core.get_pin(6)),  # button4
             12: Button(srin1_core.get_pin(7)),  # button1
+            # Joystick
+            (13, 14, 15): Joystick(  # joyL
+                x=mp1_core[10],
+                y=mp1_core[11],
+                sw=board.IO42,
+                tolerance=300,
+            ),
+            (16, 17, 18): Joystick(  # joyR
+                x=mp1_core[9],
+                y=mp1_core[8],
+                sw=board.IO41,
+                tolerance=300,
+            ),
         }
     )
 
