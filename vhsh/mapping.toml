@@ -1,22 +1,26 @@
-[scene]
-prev = 6
-next = 7
+# [scene]
+# prev = 6
+# next = 7
 
 # [preset]
 # prev = 61
 # next = 62
 # save = 60
 
-[ui]
-toggle = 8
-
-[parameter.time]
-toggle = 0
+# [ui]
+# toggle = 8
+#
+# [parameter.time]
+# toggle = 0
 
 [parameter.custom]
-# button = [0]
-knob = [1]
-x = [2]
-y = [3]
-z = [4]
-distance = [5]
+button = [9, 10, 11, 12]
+knob = [1, 2, 3, 4]
+
+joyLX = 13
+joyLY = 14
+joyLZ = 15
+
+joyRX = 16
+joyRY = 17
+joyRZ = 18

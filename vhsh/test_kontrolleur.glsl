@@ -1,25 +1,26 @@
-uniform float pot1; // #1
-uniform float pot2; // #2
-uniform float pot3; // #3
-uniform float pot4; // #4
+uniform float pot_1; // #knob1
+uniform float pot_2; // #knob2
+uniform float pot_3; // #knob3
+uniform float pot_4; // #knob4
 
 uniform bool btn_reset; // #5
+
 uniform float enc_a; // #6
 uniform float enc_b; // #7
-uniform float enc_btn; // #8
+uniform bool enc_btn; // #8
 
-uniform bool btn1; // #9
-uniform bool btn2; // #10
-uniform bool btn3; // #11
-uniform bool btn4; // #12
+uniform bool btn_1; // #button1
+uniform bool btn_2; // #button2
+uniform bool btn_3; // #button3
+uniform bool btn_4; // #button4
 
 uniform vec2 position; // <position> =(0.5,0.5)
-uniform vec2 joy_l_xy; // <velocity> #13:14
-uniform bool joy_l_z; // =0 #15
+uniform vec2 joy_l_xy; // <velocity> #joyLX:joyLY
+uniform bool joy_l_z; // =0 #joyLZ
 
 uniform vec2 orientation;
-uniform vec2 joy_r_xy; // #16:17
-uniform bool joy_r_z; // #18
+uniform vec2 joy_r_xy; // #joyRX:joyRY
+uniform bool joy_r_z; // =0 #joyRZ
 
 void main() {
     vec2 p = gl_FragCoord.xy / Resolution;
