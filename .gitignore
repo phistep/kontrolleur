@@ -10,3 +10,5 @@ adafruit-circuitpython-bundle*
 datasheets
 *.jpg
 *.pdf
+
+imgui.ini
